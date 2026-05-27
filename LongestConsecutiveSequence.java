@@ -1,0 +1,54 @@
+class Solution {
+    public int longestConsecutive(int[] nums) {
+    int len=0;
+    Map<Integer,Boolean> E=new HashMap<>();
+    for(int num:nums){
+        E.put(num,Boolean.FALSE);
+    }    
+    for(int num:nums){
+        int currlen=1;
+        int nextnum=num+1;
+        while(E.containsKey(nextnum)&&E.get(nextnum)==false){
+        currlen++;
+        E.put(nextnum,Boolean.TRUE);
+        nextnum++;
+        }
+    int prev=num-1;
+    while(E.containsKey(prev)&&E.get(prev)==false){
+        currlen++;
+        E.put(prev,Boolean.TRUE);
+        prev--;
+    }
+    len=Math.max(len,currlen);
+    }
+    return len;
+    }
+}
+///////////////////////////////////////////////////////////////Time Complexity O(logn)//////////////////////////////////////////////////////////////////////////
+class Solution {
+    public int longestConsecutive(int[] nums) {
+     if (nums.length == 0) {
+                return 0;
+            }
+            TreeSet<Integer> treeSet = new TreeSet<>();
+            for (int i : nums) {
+                treeSet.add(i); 
+            }
+            int ans = 1;
+            Iterator<Integer> it = treeSet.iterator();
+            Integer curr = it.next();
+            int len = 1;
+            while (it.hasNext()) {
+                Integer next = it.next();
+                if (curr + 1 == next) {
+                    len++;
+                } else {
+                    len = 1;
+                }
+                curr = next;
+                ans = Math.max(ans, len);
+            }
+            ans = Math.max(ans, len);
+            return ans;    
+    }
+}
